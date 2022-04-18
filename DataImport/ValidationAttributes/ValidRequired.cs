@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace DataImport.ValidationAttributes
 {
-   class ValidRequired
-   {
-   }
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    sealed public class ValidRequired : RequiredAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (!ValidationConfig.NeedRequiredConfig)
+            {
+                return true;
+            }
+
+            return base.IsValid(value);
+        }
+    }
 }
